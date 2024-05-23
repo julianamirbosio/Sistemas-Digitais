@@ -37,25 +37,49 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity SistemaDigitalFibonacci is 
-end;
+    generic(width: positive := 16);
+    port(
+		-- control inputs
+	    	clock, reset: in std_logic;
+		iniciar: in std_logic;
+		-- control outputs
+		pronto: out std_logic;
+		-- data inputs
+        	n: in std_logic_vector(width-1 downto 0);
+		-- data outputs
+       	 	nElemento: out std_logic_vector(width-1 downto 0)
+    );
+end entity;
 
 architecture estrutural of SistemaDigitalFibonacci is
-
-component BlocoControle is
-	port(clock, reset: in std_logic;
+	component BlocoControle is
+		port(
+			clock, reset: in std_logic;
 			-- controle externo
 			iniciar: in std_logic;
 			pronto: out std_logic;
 			-- controle interno
 			sttNleq2, sttIleqN: in std_logic;
 			cmdI3, cmdPrim1, cmdSeg1, cmdSomaPrimPlusSeg, cmdPrimSeq, cmdSegSoma, cmdIinc: out std_logic;
-	);
-end component;
+		);
+	end component;
 
-component BlocoOperativo is
+	component BlocoOperativo is
+		generic(width: positive);
+		port(
+			clock, reset: in std_logic;
+			cmdI3, cmdPrim1, cmdSeg1, cmdSomaPrimPlusSeg, cmdPrimSeq, cmdSegSoma, cmdIinc: in std_logic;
+			sttNleq2, sttIleqN: out std_logic;
+			n: in std_logic_vector(width-1 downto 0);
+	       	 	nElemento: out std_logic_vector(width-1 downto 0)
+		);
+	end component;
 
-end component;
-	
+    signal  -- COMPLETE
+begin
+    BC: BlocoControle port map(--COMPLETE);
+    BO: BlocoOperativo generic map(width) port map(--COMPLETE);
+end architecture;
 	
 	
 	
