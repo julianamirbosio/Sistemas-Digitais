@@ -36,7 +36,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity SistemaDigitalFibonacci is 
+entity Fibonacci is 
     generic(width: positive := 16);
     port(
 		-- control inputs
@@ -51,7 +51,7 @@ entity SistemaDigitalFibonacci is
     );
 end entity;
 
-architecture estrutural of SistemaDigitalFibonacci is
+architecture estrutural of Fibonacci is
 	component BlocoControle is
 		port(
 			clock, reset: in std_logic;
