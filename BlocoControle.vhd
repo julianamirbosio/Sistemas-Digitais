@@ -8,13 +8,13 @@ entity BlocoControle is
 			pronto: out std_logic;
 			-- controle interno
 			sttNleq2, sttIleqN: in std_logic;
-			cmdI3, cmdPrim1, cmdSeg1, cmdSomaPrimPlusSeg, cmdPrimSeq, cmdSegSoma, cmdIinc: out std_logic;
+			cmdI3, cmdPrim1, cmdSeg1, cmdSomaPrimPlusSeg, cmdPrimSeg, cmdSegSoma, cmdIinc: out std_logic;
 	);
 end entity;
 
 architecture comportamental of BlocoControle is
 	type State is {L01, L02, L03, L04, L05, L06, L07, L08, L09, L10, L11, L12, L13}
-	signal currentState, nextSatate: State;
+	signal currentState, nextState: State;
 begin
 	-- logica de proximo estado
 	process(currentState, iniciar, sttNleq2, sttIleqN) is
@@ -29,7 +29,7 @@ begin
 				if sttNleq2 ='1'
 					nextState <= L03;
 				else
-					nextState <= 
+					nextState <= L04;
 				end if;
 			when L03 => 
 				nextState <= L01;
@@ -43,7 +43,9 @@ begin
 				nextState <= L08;
 			when L08 => 
 				if sttIleqN='1'
-					nextState <=
+					nextState <= L09;
+				else
+					nextState <= L13;
 				end if;	
 			when L09 => 
 				nextState <= L10;
@@ -57,12 +59,12 @@ begin
 				nextState <= L01;
 	end process;
 	
-	-- registador D (elemento de memoruia ou estado interno)
+	-- registador D (elemento de memoria ou estado interno)
 	process(clock, reset) is 
 	begin
 		if reset ='1'
 			currentState <= L01;
-		elsif rising_edge9clock) then 
+		elsif (rising_edgeclock = '1') then 
 			currentState => nextState
 		end if;
 	
@@ -71,7 +73,7 @@ begin
 	cmdPrim1 <= '1' when currentState=L12 else '0';
 	cmdSeg1 <= '1' when currentState=L05 else '0';
 	cmdSomaPrimPlusSeg <= '1' when currentState=L10 else '0';
-	cmdPrimSeq <= '1' when currentState=L06 else '0';
+	cmdPrimSeg <= '1' when currentState=L06 else '0';
 	cmdSegSoma <= '1' when currentState=L11 else '0';
 	cmdIinc <= '1' when currentState=L09 else '0';
 	pronto <= '1' when currentState=L01 else '0';
