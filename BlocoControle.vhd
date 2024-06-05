@@ -67,7 +67,8 @@ begin
 		elsif (rising_edgeclock = '1') then 
 			currentState => nextState
 		end if;
-	
+	end process;
+			
 	-- logica de saida 
 	cmdI3 <= '1' when currentState=L04 else '0';
 	cmdPrim1 <= '1' when currentState=L12 else '0';
