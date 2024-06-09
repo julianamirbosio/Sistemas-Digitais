@@ -1,3 +1,9 @@
+-----------------------------------------------------------------------------------------------------------------
+-- COMPLETE COM O NOME COMPLETO DOS ALUNOS QUE REALIZAM ESTA AVALIACAO (NAO USE ACENTOS OU CARACTERES ESPECIAIS)
+-- ALUNO 1: Henrique Mateus Teodoro
+-- ALUNO 2:
+-----------------------------------------------------------------------------------------------------------------
+library ieee;
 use ieee.std_logic_1164.all;
 
 entity fibonacci is
@@ -37,8 +43,27 @@ architecture structure of fibonacci is
         );
     end component;
 
-    signal  -- COMPLETE
+    signal  ctrl1, ctrl2, ctrl3, ctrl4, ctrl5, ctrl6, ctrl7, ctrl8, ctrl9, stt1, stt2: std_logic;
 begin
-    BC: fibonacciControlBlock port map(--COMPLETE);
-    BO: fibonacciOperatingBlock generic map(width) port map(--COMPLETE);
+    BC:fibonacciControlBlock
+        port map(
+            clock, clear,
+            ctrl1, ctrl2, ctrl3, ctrl4, ctrl5, ctrl6, ctrl7, ctrl8, ctrl9,
+            stt1, stt2,
+			iniciar,
+			pronto
+        );
+    
+    
+    
+    BO: fibonacciOperatingBlock
+        generic map(width)
+        port map(
+            clock, clear,
+            ctrl1, ctrl2, ctrl3, ctrl4, ctrl5, ctrl6, ctrl7, ctrl8, ctrl9,
+            stt1, stt2,
+            n,
+            nterm
+        );
+
 end architecture;
